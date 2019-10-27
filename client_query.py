@@ -32,8 +32,8 @@ dashboard = "https://api.meraki.com"
 headers = {'X-Cisco-Meraki-API-Key': (key), 'Content-Type': 'application/json'}
 
 # open files for writing
-avery_status = open("avery_status.csv", "w", 0)
-error_status = open("error_status.csv", "w", 0)
+avery_status = open("ub_status.csv", "w", 0)
+error_status = open("ub_error_status.csv", "w", 0)
 
 #pull back all of the networks for the organization
 get_network_url = dashboard + '/api/v0/organizations/%s/networks' % organization
@@ -54,15 +54,15 @@ for network in get_network_json:
     for client in get_client_json:
         time.sleep(1)
         try:
-            if (client["os"]) == "Slingbox":                
-                avery_status.write(network["name"] + ", " + str(client["lastSeen"] + "\n"))
+            if (client["manufacturer"]) == "Ubiquiti Networks":                
+                avery_status.write(network["name"] + ", " + str(client["mac"] + "\n"))
         except TypeError:
             error_status.write(network["name"] + "\n")
             #pass
 
 
 msg = MIMEMultipart()
-msg['Subject'] = 'Current connection status of Avery Guns'
+msg['Subject'] = 'Listing of the Stores with Ubiquiti Devices'
 msg['From'] = me
 #used when sending email to groups vs a single user.
 #msg['To'] = ', '.join(you1)
