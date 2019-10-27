@@ -47,8 +47,8 @@ get_network_json = get_network_response.json()
 
 for network in get_network_json:
     time.sleep(1)
-    #use this one when pulling back the last 3 days worth of data
-    get_client_url = dashboard + '/api/v0/networks/%s/clients?timespan=604800' % network["id"]
+    #use this one when pulling back the last 30 days worth of data
+    get_client_url = dashboard + '/api/v0/networks/%s/clients?timespan=2678400' % network["id"]
     get_client_response = requests.get(get_client_url, headers=headers)
     get_client_json = get_client_response.json()
     for client in get_client_json:
@@ -62,7 +62,7 @@ for network in get_network_json:
 
 
 msg = MIMEMultipart()
-msg['Subject'] = 'Current connection status of Avery Guns'
+msg['Subject'] = 'Special 30 day run of Avery Guns'
 msg['From'] = me
 #used when sending email to groups vs a single user.
 #msg['To'] = ', '.join(you1)
