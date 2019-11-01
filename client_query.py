@@ -60,7 +60,7 @@ for network in get_network_json:
             error_status.write(network["name"] + "\n")
             #pass
 
-
+#send the main message with details in csv
 msg = MIMEMultipart()
 msg['Subject'] = 'Current connection status of Avery Guns'
 msg['From'] = me
@@ -81,5 +81,27 @@ msg.attach(part)
 s = smtplib.SMTP(email_server)
 s.sendmail(me, you1, msg.as_string())
 s.quit()
+
+# send out just the errored out stores:
+msg1 = MIMEMultipart()
+msg1['Subject'] = 'Stores that errored out on the Avery Report'
+msg1['From'] = me
+msg1['To'] = you1
+
+part1 = MIMEBase('application', "octet-stream")
+part1.set_payload(open("error_status.csv", "rb").read())
+Encoders.encode_base64(part1)
+
+part1.add_header('Content-Disposition', 'attachment; filename="error_status.csv"')
+
+msg1.attach(part1)
+
+# Send the message via our own SMTP server, but don't include the
+# envelope header.
+s1 = smtplib.SMTP(email_server)
+s1.sendmail(me, you1, msg1.as_string())
+s1.quit()
+
+
 avery_status.close
 error_status.close
