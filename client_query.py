@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 #main varaiables to be anonymized later before upload to github:
+import cred
 organization = cred.organization
 key = cred.key
 email_server = cred.email_server
@@ -18,8 +19,8 @@ from email import Encoders
 
 
 #Import the CRED module from a separate directory
-sys.path.insert(0,'../CRED')
-import cred
+#sys.path.insert(0,'../CRED')
+#import cred
 
 
 me = cred.me
@@ -54,7 +55,7 @@ for network in get_network_json:
     for client in get_client_json:
         time.sleep(1)
         try:
-            if (client["os"]) == "Slingbox":                
+            if (client["manufacturer"]) == "Meraki":                
                 avery_status.write(network["name"] + ", " + str(client["lastSeen"] + "\n"))
         except TypeError:
             error_status.write(network["name"] + "\n")
