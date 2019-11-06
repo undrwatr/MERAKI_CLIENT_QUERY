@@ -54,11 +54,8 @@ for network in get_network_json:
     for client in get_client_json:
         time.sleep(1)
         try:
-            if (client["os"]) == "Slingbox":                
-                avery_status.write(network["name"] + ", " + str(client["lastSeen"] + "\n"))
+		avery_status.write(network["name"] + ", " + str(client["description"]) + ", " + str(client["mac"]) + ", " + str(client["manufacturer"]) + ", " + str(client["os"] + "\n"))
         except TypeError:
-            error_status.write(network["name"] + "\n")
-            #pass
 
 
 msg = MIMEMultipart()
